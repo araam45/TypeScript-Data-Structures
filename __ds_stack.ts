@@ -17,6 +17,8 @@
  *  
  */
 
+import { __m_pair } from "./__m_pair";
+
 class __ds_stack<itemType> {
 
     private m_stack: Array<itemType> = new Array<itemType>();
@@ -25,19 +27,6 @@ class __ds_stack<itemType> {
 
         if (this.m_stack.length == 0) {
 
-            return false;
-
-        }
-
-        return true;
-
-    }
-
-    public push(item: itemType): boolean {
-
-        if (this.m_stack.length < 1000) {
-
-            this.m_stack.push(item);
             return true;
 
         }
@@ -46,10 +35,25 @@ class __ds_stack<itemType> {
 
     }
 
-    public pop(): boolean {
+    public push(item: itemType): __m_pair<itemType, boolean> {
 
+        if (this.m_stack.length < 1000) {
+
+            this.m_stack.push(item);
+            return new __m_pair<itemType, boolean>(item, true);
+
+        }
+
+        return new __m_pair<itemType, boolean>(item, false);
+
+    }
+
+    public pop(): __m_pair<itemType, boolean> {
+
+        let removed: itemType = this.m_stack[this.m_stack.length - 1];
+        
         this.m_stack.splice(this.m_stack.length - 1);
-        return true;
+        return new __m_pair<itemType, boolean>(removed, true);
 
     }
 
